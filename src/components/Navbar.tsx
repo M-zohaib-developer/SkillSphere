@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, User, LogOut, Settings, BookOpen } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, User, LogOut, Settings, BookOpen } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,34 +13,46 @@ const Navbar: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
     setIsOpen(false);
   };
 
   const publicLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/courses', label: 'Courses' },
-    { path: '/about', label: 'About' },
-    { path: '/contact', label: 'Contact' },
+    { path: "/", label: "Home" },
+    { path: "/courses/free", label: "Get Free" },
+    { path: "/courses/paid", label: "Browse Courses" },
+    { path: "/about", label: "About" },
+    { path: "/contact", label: "Contact" },
   ];
 
   const authenticatedLinks = [
-    { path: '/dashboard', label: 'Dashboard' },
-    { path: '/courses', label: 'Courses' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/community', label: 'Community' },
+    { path: "/dashboard", label: "Dashboard" },
+    { path: "/courses/free", label: "Free" },
+    { path: "/courses/paid", label: "Paid" },
+    { path: "/projects", label: "Projects" },
+    { path: "/community", label: "Community" },
   ];
 
   const links = isAuthenticated ? authenticatedLinks : publicLinks;
 
   return (
-    <nav className={`${theme === 'dark' ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} border-b shadow-sm sticky top-0 z-50 transition-colors duration-200`}>
+    <nav
+      className={`${
+        theme === "dark"
+          ? "bg-gray-900 border-gray-700"
+          : "bg-white border-gray-200"
+      } border-b shadow-sm sticky top-0 z-50 transition-colors duration-200`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <BookOpen className="h-8 w-8 text-blue-600" />
-              <span className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              <span
+                className={`text-xl font-bold ${
+                  theme === "dark" ? "text-white" : "text-gray-900"
+                }`}
+              >
                 SkillSphere
               </span>
             </Link>
@@ -54,10 +66,10 @@ const Navbar: React.FC = () => {
                 to={link.path}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                   location.pathname === link.path
-                    ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                    : theme === 'dark'
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? "text-blue-600 bg-blue-50 dark:bg-blue-900/20"
+                    : theme === "dark"
+                    ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
                 {link.label}
@@ -72,9 +84,9 @@ const Navbar: React.FC = () => {
                 <Link
                   to="/profile"
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                    theme === 'dark'
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    theme === "dark"
+                      ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                 >
                   <User className="h-4 w-4" />
@@ -83,9 +95,9 @@ const Navbar: React.FC = () => {
                 <Link
                   to="/settings"
                   className={`p-2 rounded-md transition-colors duration-200 ${
-                    theme === 'dark'
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    theme === "dark"
+                      ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                 >
                   <Settings className="h-5 w-5" />
@@ -93,9 +105,9 @@ const Navbar: React.FC = () => {
                 <button
                   onClick={handleLogout}
                   className={`p-2 rounded-md transition-colors duration-200 ${
-                    theme === 'dark'
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    theme === "dark"
+                      ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                 >
                   <LogOut className="h-5 w-5" />
@@ -124,12 +136,16 @@ const Navbar: React.FC = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`p-2 rounded-md transition-colors duration-200 ${
-                theme === 'dark'
-                  ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                theme === "dark"
+                  ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -137,7 +153,11 @@ const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className={`md:hidden border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
+        <div
+          className={`md:hidden border-t ${
+            theme === "dark" ? "border-gray-700" : "border-gray-200"
+          }`}
+        >
           <div className="px-2 pt-2 pb-3 space-y-1">
             {links.map((link) => (
               <Link
@@ -146,25 +166,25 @@ const Navbar: React.FC = () => {
                 onClick={() => setIsOpen(false)}
                 className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                   location.pathname === link.path
-                    ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                    : theme === 'dark'
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? "text-blue-600 bg-blue-50 dark:bg-blue-900/20"
+                    : theme === "dark"
+                    ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            
+
             {isAuthenticated ? (
               <>
                 <Link
                   to="/profile"
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    theme === 'dark'
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    theme === "dark"
+                      ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                 >
                   <User className="h-5 w-5" />
@@ -174,9 +194,9 @@ const Navbar: React.FC = () => {
                   to="/settings"
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    theme === 'dark'
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    theme === "dark"
+                      ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                 >
                   <Settings className="h-5 w-5" />
@@ -185,9 +205,9 @@ const Navbar: React.FC = () => {
                 <button
                   onClick={handleLogout}
                   className={`flex items-center space-x-2 w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    theme === 'dark'
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    theme === "dark"
+                      ? "text-gray-300 hover:text-white hover:bg-gray-700"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                 >
                   <LogOut className="h-5 w-5" />
