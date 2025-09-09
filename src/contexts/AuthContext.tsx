@@ -91,9 +91,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
+  
+    // Clear entire localStorage
+    localStorage.clear();
   };
+  
 
   const updateUser = (userData: Partial<User>) => {
     if (user) {

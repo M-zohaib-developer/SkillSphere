@@ -18,6 +18,8 @@ const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { theme } = useTheme();
 
+  
+
   const recentCourses = [
     {
       id: 1,
@@ -289,39 +291,44 @@ const Dashboard: React.FC = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {enrolled.map((c) => (
-                    <div
-                      key={c.id}
-                      className={`flex items-center space-x-3 p-3 rounded-lg border ${
-                        theme === "dark"
-                          ? "border-gray-600 hover:bg-gray-700"
-                          : "border-gray-200 hover:bg-gray-50"
-                      } transition-colors duration-200`}
-                    >
-                      {c.image && (
-                        <img
-                          src={c.image}
-                          alt={c.title}
-                          className="w-12 h-12 rounded object-cover"
-                        />
-                      )}
-                      <div className="flex-1">
-                        <p
-                          className={`font-medium ${
-                            theme === "dark" ? "text-white" : "text-gray-900"
-                          }`}
-                        >
-                          {c.title}
-                        </p>
-                        <p
-                          className={`text-xs ${
-                            theme === "dark" ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
-                          {c.durationHours} hours • {c.language}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+  <div
+    key={c.id}
+    className={`flex items-center justify-between p-3 rounded-lg border ${
+      theme === "dark"
+        ? "border-gray-600 hover:bg-gray-700"
+        : "border-gray-200 hover:bg-gray-50"
+    } transition-colors duration-200`}
+  >
+    <div className="flex items-center space-x-3">
+      {c.image && (
+        <img
+          src={c.image}
+          alt={c.title}
+          className="w-12 h-12 rounded object-cover"
+        />
+      )}
+      <div>
+        <p
+          className={`font-medium ${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {c.title}
+        </p>
+        <p
+          className={`text-xs ${
+            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
+          {c.durationHours} hours • {c.language}
+        </p>
+      </div>
+    </div>
+
+   
+  </div>
+))}
+
                 </div>
               )}
             </div>
