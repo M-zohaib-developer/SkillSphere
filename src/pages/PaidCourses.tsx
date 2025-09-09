@@ -132,71 +132,94 @@ const PaidCourses: React.FC = () => {
         </div>
 
         <div
-          className={`${
+  className={`${
+    theme === "dark"
+      ? "bg-gray-800 border-gray-700"
+      : "bg-white border-gray-200"
+  } rounded-lg shadow-sm border p-6 mb-8`}
+>
+  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+    {/* Search Box */}
+    <div className="md:col-span-2">
+      <label
+        className={`block mb-2 text-sm font-medium ${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
+        }`}
+      >
+        Search
+      </label>
+      <div className="relative">
+        <Search
+          className={`absolute left-3 top-3 h-5 w-5 ${
+            theme === "dark" ? "text-gray-400" : "text-gray-400"
+          }`}
+        />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search paid courses..."
+          className={`w-full pl-10 pr-3 py-3 border ${
             theme === "dark"
-              ? "bg-gray-800 border-gray-700"
-              : "bg-white border-gray-200"
-          } rounded-lg shadow-sm border p-6 mb-8`}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="md:col-span-2 relative">
-              <Search
-                className={`absolute left-3 top-3 h-5 w-5 ${
-                  theme === "dark" ? "text-gray-400" : "text-gray-400"
-                }`}
-              />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search paid courses..."
-                className={`w-full pl-10 pr-3 py-3 border ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700 text-white placeholder-gray-400"
-                    : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
-                } rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-              />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2 mb-2 text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}">
-                <Filter className="h-4 w-4" />
-                Category
-              </div>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className={`w-full px-3 py-3 border ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700 text-white"
-                    : "border-gray-300 bg-white text-gray-900"
-                } rounded-md`}
-              >
-                <option>All</option>
-                {categories.map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <div className="flex items-center space-x-2 mb-2 text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}">
-                <Globe className="h-4 w-4" />
-                Language
-              </div>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value as any)}
-                className={`w-full px-3 py-3 border ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700 text-white"
-                    : "border-gray-300 bg-white text-gray-900"
-                } rounded-md`}
-              >
-                <option>All</option>
-                <option>English</option>
-                <option>Hindi</option>
-              </select>
-            </div>
-          </div>
-        </div>
+              ? "border-gray-600 bg-gray-700 text-white placeholder-gray-400"
+              : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
+          } rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+        />
+      </div>
+    </div>
+
+    {/* Category */}
+    <div>
+      <label
+        className={`flex items-center space-x-2 mb-2 text-sm font-medium ${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
+        }`}
+      >
+        <Filter className="h-4 w-4" />
+        <span>Category</span>
+      </label>
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className={`w-full px-3 py-3 border ${
+          theme === "dark"
+            ? "border-gray-600 bg-gray-700 text-white"
+            : "border-gray-300 bg-white text-gray-900"
+        } rounded-md`}
+      >
+        <option>All</option>
+        {categories.map((c) => (
+          <option key={c}>{c}</option>
+        ))}
+      </select>
+    </div>
+
+    {/* Language */}
+    <div>
+      <label
+        className={`flex items-center space-x-2 mb-2 text-sm font-medium ${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
+        }`}
+      >
+        <Globe className="h-4 w-4" />
+        <span>Language</span>
+      </label>
+      <select
+        value={language}
+        onChange={(e) => setLanguage(e.target.value as any)}
+        className={`w-full px-3 py-3 border ${
+          theme === "dark"
+            ? "border-gray-600 bg-gray-700 text-white"
+            : "border-gray-300 bg-white text-gray-900"
+        } rounded-md`}
+      >
+        <option>All</option>
+        <option>English</option>
+        <option>Hindi</option>
+      </select>
+    </div>
+  </div>
+</div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map((course) => (

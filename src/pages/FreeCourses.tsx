@@ -5,7 +5,6 @@ import {
   Filter,
   Clock,
   Layers,
-  Globe,
 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import { loadProjects, saveProjects } from "../utils/storage";
@@ -31,6 +30,7 @@ const categories = [
   "AI",
   "Personal Development",
 ];
+
 const sampleImages = [
   "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg",
   "https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg",
@@ -40,6 +40,15 @@ const sampleImages = [
   "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg",
   "https://images.pexels.com/photos/1181341/pexels-photo-1181341.jpeg",
   "https://images.pexels.com/photos/3861948/pexels-photo-3861948.jpeg",
+];
+
+// ✅ Trusted course links
+const trustedLinks = [
+  "https://scrimba.com/learn/react", // Scrimba React course
+  "https://www.joyofreact.com/", // Joy of React
+  "https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/react", // Odin Project React path
+  "https://epicreact.dev/", // Epic React by Kent C. Dodds (paid)
+  "https://react.dev/learn" // Official React docs
 ];
 
 function generateFreeCourses(): FreeCourse[] {
@@ -100,27 +109,21 @@ function generateFreeCourses(): FreeCourse[] {
     "NumPy Basics",
     "Matplotlib Basics",
   ];
-  const links = [
-    "https://www.youtube.com",
-    "https://www.freecodecamp.org",
-    "https://www.edx.org",
-    "https://www.coursera.org",
-    "https://www.udacity.com",
-  ];
+
   const courses: FreeCourse[] = [];
   for (let i = 0; i < 56; i++) {
     courses.push({
       id: `free-${i + 1}`,
       title: titles[i % titles.length],
       description:
-        "Free course covering core concepts with practical examples and resources.",
+        "Trusted free course covering core concepts with practical examples and resources.",
       image:
         sampleImages[i % sampleImages.length] +
         "?auto=compress&cs=tinysrgb&w=600",
       category: categories[i % categories.length],
       language: i % 4 === 0 ? "Hindi" : "English",
       durationHours: 1 + (i % 10) * 2,
-      link: links[i % links.length],
+      link: trustedLinks[i % trustedLinks.length], // ✅ Use curated links
     });
   }
   return courses;
@@ -134,9 +137,7 @@ const FreeCourses: React.FC = () => {
 
   const allCourses = useMemo(() => generateFreeCourses(), []);
 
-  useEffect(() => {
-    // placeholder for analytics
-  }, []);
+  useEffect(() => {}, []);
 
   const filtered = allCourses.filter((c) => {
     const s = search.trim().toLowerCase();
@@ -157,11 +158,13 @@ const FreeCourses: React.FC = () => {
         "Did you finish or try this course? Add what you learned and optionally create a project?"
       );
       if (!shouldAdd) return;
+
       const learnings = window.prompt("What did you learn? (optional)") || "";
       const title =
         window.prompt(
           "Project title (optional, leave blank to skip project)"
         ) || "";
+
       if (title.trim()) {
         const desc = window.prompt("Project description (optional)") || "";
         const existing = loadProjects();
@@ -178,11 +181,10 @@ const FreeCourses: React.FC = () => {
           tags: course ? [course.category, "Free Course"] : ["Free Course"],
           progress: 0,
         };
-        // Hide demo projects on first user save handled by Projects page logic; here we only append
         saveProjects([newProject, ...existing]);
       }
+
       if (learnings.trim()) {
-        // Persist a lightweight note alongside projects using a dedicated key per simplicity
         const key = "ss_user_learnings_v1";
         const raw = localStorage.getItem(key);
         const arr = raw ? JSON.parse(raw) : [];
@@ -221,6 +223,7 @@ const FreeCourses: React.FC = () => {
           </p>
         </div>
 
+        {/* Filters */}
         <div
           className={`${
             theme === "dark"
@@ -228,29 +231,40 @@ const FreeCourses: React.FC = () => {
               : "bg-white border-gray-200"
           } rounded-lg shadow-sm border p-6 mb-8`}
         >
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="md:col-span-2 relative">
-              <Search
-                className={`absolute left-3 top-3 h-5 w-5 ${
-                  theme === "dark" ? "text-gray-400" : "text-gray-400"
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            {/* Search */}
+            <div className="md:col-span-2">
+              <label
+                className={`block mb-2 text-sm font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
                 }`}
-              />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search free courses..."
-                className={`w-full pl-10 pr-3 py-3 border ${
-                  theme === "dark"
-                    ? "border-gray-600 bg-gray-700 text-white placeholder-gray-400"
-                    : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
-                } rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-              />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2 mb-2 text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}">
-                <Filter className="h-4 w-4" />
-                Category
+              >
+                Search
+              </label>
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search free courses..."
+                  className={`w-full pl-10 pr-3 py-3 border ${
+                    theme === "dark"
+                      ? "border-gray-600 bg-gray-700 text-white placeholder-gray-400"
+                      : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
+                  } rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                />
               </div>
+            </div>
+
+            {/* Category */}
+            <div>
+              <label
+                className={`block mb-2 text-sm font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                Category
+              </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -266,11 +280,16 @@ const FreeCourses: React.FC = () => {
                 ))}
               </select>
             </div>
+
+            {/* Language */}
             <div>
-              <div className="flex items-center space-x-2 mb-2 text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}">
-                <Globe className="h-4 w-4" />
+              <label
+                className={`block mb-2 text-sm font-medium ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 Language
-              </div>
+              </label>
               <select
                 value={language}
                 onChange={(e) =>
@@ -290,6 +309,7 @@ const FreeCourses: React.FC = () => {
           </div>
         </div>
 
+        {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map((course) => (
             <div
@@ -306,7 +326,7 @@ const FreeCourses: React.FC = () => {
                   alt={course.title}
                   className="w-full h-44 object-cover"
                 />
-                <div className="absolute top-2 left-2">
+                <div className="absolute top-2 left-2 flex gap-1">
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
                       theme === "dark"
@@ -315,6 +335,15 @@ const FreeCourses: React.FC = () => {
                     }`}
                   >
                     Free
+                  </span>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      theme === "dark"
+                        ? "bg-blue-900/30 text-blue-400"
+                        : "bg-blue-100 text-blue-700"
+                    }`}
+                  >
+                    Trusted
                   </span>
                 </div>
               </div>
@@ -353,7 +382,7 @@ const FreeCourses: React.FC = () => {
                   onClick={() => openLink(course.link, course)}
                   className="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors duration-200"
                 >
-                  Open Link <ExternalLink className="h-4 w-4 ml-2" />
+                  Open Course <ExternalLink className="h-4 w-4 ml-2" />
                 </button>
               </div>
             </div>

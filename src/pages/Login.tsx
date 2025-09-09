@@ -117,7 +117,7 @@ const Login: React.FC = () => {
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`appearance-none relative block w-full pl-10 pr-3 py-3 border ${
+                  className={`appearance-none relative block w-full pl-4 pr-3 py-3 border ${
                     errors.email ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                   } placeholder-gray-500 dark:placeholder-gray-400 ${
                     theme === 'dark' ? 'text-white bg-gray-700' : 'text-gray-900 bg-white'
@@ -147,7 +147,7 @@ const Login: React.FC = () => {
                   autoComplete="current-password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`appearance-none relative block w-full pl-10 pr-10 py-3 border ${
+                  className={`appearance-none relative block w-full pl-4 pr-10 py-3 border ${
                     errors.password ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600'
                   } placeholder-gray-500 dark:placeholder-gray-400 ${
                     theme === 'dark' ? 'text-white bg-gray-700' : 'text-gray-900 bg-white'
